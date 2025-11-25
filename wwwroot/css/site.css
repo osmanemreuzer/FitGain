@@ -1,0 +1,59 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  background-color: #dfd6d6;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+.custom-brand {
+    margin-right: 1400px !important;
+    font-style: italic;
+    font-size: 1.8rem !important;
+}
+.avatar {
+  width: 3rem;
+  height: 3rem;
+}
+.navbar {
+    height: 85px;              
+    display: flex;
+    align-items: center;      
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.navbar .navbar-brand {
+    display: flex;
+    align-items: center;
+    margin: 0;                 
+}
+
+
+
+
+
