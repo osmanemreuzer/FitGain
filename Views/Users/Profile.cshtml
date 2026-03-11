@@ -1,33 +1,74 @@
 @model User
 
-<div class="row">
-    <div class="col-md-2">
-        <div class="bg-white p-4" style="width:100%; height:300px;">
-        <img src="/img/@Model.Image" class="img-fluid w-100 h-100 object-fit-cover" alt="">
-</div>
-
-    </div>
-    <div class="col-md-10">
-        <div class="bg-white p-4">
-            <h5>@Model.Name</h5>
-            <hr>
-            <div id="posts">
-                <h5 class="my-4">Published Posts</h5>
-                <ul class="list-group">
-                    @foreach(var post in @Model.Posts)
-                    {
-                        <li class="list-group-item"><i class="bi bi-caret-right-fill"></i> <a href="/posts/details/@post.Url">@post.Title</a></li>
-                    }
-                </ul>
-            </div>
-            <div id="comments">
-                <h5 class="my-4">Comments</h5>
-                <ul class="list-group">
-                    @foreach(var comment in @Model.Comments)
-                    {
-                        <li class="list-group-item"><i class="bi bi-chat-right-text-fill"></i> @comment.Text <i><u>[@comment.Post.Title]</u></i></li>
-                    }
-                </ul>
+<div class="animate-fade-in-up">
+    <!-- Profile Hero -->
+    <div class="profile-hero">
+        <img src="/img/@Model.Image" class="profile-avatar" alt="@Model.Name">
+        <div>
+            <h1 class="profile-name gradient-text">@Model.Name</h1>
+            <p style="color: var(--text-muted); margin-bottom: 0;">@@Model.UserName</p>
+            <div class="profile-stats">
+                <div class="profile-stat">
+                    <div class="profile-stat-number">@Model.Posts.Count()</div>
+                    <div class="profile-stat-label">Posts</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-number">@Model.Comments.Count()</div>
+                    <div class="profile-stat-label">Comments</div>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="row g-4">
+        <!-- Published Posts -->
+        <div class="col-md-6">
+            <div class="glass-card-static">
+                <div class="profile-section-title">
+                    <i class="bi bi-file-earmark-text-fill"></i> Published Posts
+                </div>
+                @if(Model.Posts.Any())
+                {
+                    @foreach(var post in Model.Posts)
+                    {
+                        <div class="profile-list-item">
+                            <i class="bi bi-caret-right-fill"></i>
+                            <a href="/posts/details/@post.Url">@post.Title</a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p style="color: var(--text-muted); text-align: center; padding: 1rem;">No posts yet.</p>
+                }
+            </div>
+        </div>
+
+        <!-- Comments -->
+        <div class="col-md-6">
+            <div class="glass-card-static">
+                <div class="profile-section-title">
+                    <i class="bi bi-chat-right-text-fill"></i> Comments
+                </div>
+                @if(Model.Comments.Any())
+                {
+                    @foreach(var comment in Model.Comments)
+                    {
+                        <div class="profile-list-item">
+                            <i class="bi bi-chat-dots-fill"></i>
+                            <div>
+                                <span style="color: var(--text-secondary); font-size: var(--font-size-sm);">@comment.Text</span>
+                                <br>
+                                <small style="color: var(--text-muted);">on <em>@comment.Post.Title</em></small>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p style="color: var(--text-muted); text-align: center; padding: 1rem;">No comments yet.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

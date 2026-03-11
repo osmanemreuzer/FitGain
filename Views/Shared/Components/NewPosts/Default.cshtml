@@ -1,19 +1,15 @@
 @model List<Post>
 
-<div class="card mb-3">
-    <div class="card-header">
-        <h5 class="card-title mb-0">New Posts</h5>
+<div class="glass-card-static sidebar-widget">
+    <div class="sidebar-widget-title">
+        <i class="bi bi-fire"></i> New Posts
     </div>
-    <div class="card-body">
-        @foreach(var post in Model)
-        {
-            <div class="mb-3">
-                <h6 class="mb-0">
-                    <a href="/posts/details/@post.Url">
-                        @post.Title
-                    </a>
-                </h6>
-            </div>
-        }
-    </div>
+    @foreach(var post in Model)
+    {
+        <div class="sidebar-post-item">
+            <a href="/posts/details/@post.Url">
+                @post.Title
+            </a>
+        </div>
+    }
 </div>

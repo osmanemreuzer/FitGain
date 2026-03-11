@@ -1,74 +1,89 @@
 @model Post
 
-<div class="row">
-    <div class="col-lg-8 ps-0">
-        <div class="bg-white p-4">
-            <h1 class="h4 mb-4">@Model.Title</h1>
-            <div class="tags">
-                @foreach(var tag in Model.Tags)
-                {
-                    <a href="/posts/tag/@tag.Url" class="badge bg-@tag.Color bg-opacity-10 text-@tag.Color mb-2 fw-bold">@tag.Text</a>
-                }
+<div class="row g-4 animate-fade-in-up">
+    <!-- Article Content -->
+    <div class="col-lg-8">
+        <div class="glass-card-static" style="padding: 2rem;">
+            <!-- Header -->
+            <div class="article-header">
+                <h1 class="article-title gradient-text">@Model.Title</h1>
+                <div class="tags mb-3">
+                    @foreach(var tag in Model.Tags)
+                    {
+                        <a href="/posts/tag/@tag.Url" class="tag-badge tag-@tag.Color me-1 mb-1">@tag.Text</a>
+                    }
+                </div>
             </div>
-            
-            <img src="~/img/@Model.Image" class="img-fluid rounded" alt="">
+
+            <!-- Featured Image -->
+            <img src="~/img/@Model.Image" class="article-image" alt="@Model.Title">
+
+            <!-- Meta -->
+            <div class="article-meta">
+                <span><i class="bi bi-calendar3"></i> @Model.PublishedOn.ToString("d")</span>
+                <span><i class="bi bi-person-circle"></i> <a href="/profile/@Model.User.UserName">@Model.User.Name</a></span>
+            </div>
             <hr>
-            <ul class="list-inline my-3">
-                <li class="list-inline-item"><i class="bi bi-calendar me-1"></i>@Model.PublishedOn.ToString("d")</li>
-                <li class="list-inline-item"><i class="bi bi-person-circle me-1"></i><a href="/profile/@Model.User.UserName" class="text-decoration-none">@Model.User.Name</a></li>
-            </ul>
-            <hr class="py-2">
-            <div>@Html.Raw(@Model.Content)</div>            
-        </div>
-        <div class="bg-white mt-3">
-            <div class="card border-0">
-                <div class="card-header pb-0">
-                    <h4>@Model.Comments.Count() comments </h4>
-                </div>
-                <div class="card-body">
-                    @foreach(var comment in Model.Comments)
-                    {
-                        <div class="my-4 d-flex">
-                            <img src="/img/@comment.User.Image" alt="" class="avatar rounded-circle float-start me-3">
-                            <div>
-                                <div class="mb-2 d-flex">
-                                    <h6 class="me-2">
-                                        <a href="/profile/@comment.User.UserName">@comment.User.Name</a>
-                                    </h6>
-                                    <small>@comment.PublishedOn.ToString("G")</small>
-                                </div>
-                                <p>@comment.Text</p>
-                            </div>
-                        </div>
-                    }
-                    @if(User.Identity!.IsAuthenticated)
-                    {
-                        <hr class="my-4">
-                    <div>
-                        <h4>Add Comment</h4>
-                        <form action="/posts/AddComment" method="post">
-                            <input type="hidden" name="PostId" value="@Model.PostId">
-                            <input type="hidden" name="Url" value="@Model.Url">
-                            <div class="mb-3">
-                                <label for="Text" class="form-label">Comment</label>
-                                <textarea type="text" name="Text" id="Text" rows="3" class="form-control"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                    }
-                    else
-                    {
-                        <p>You must log in to the app to comment. <a href="/users/login">Login</a></p>
-                    }
-                    
-                </div>
+
+            <!-- Content -->
+            <div class="article-content">
+                @Html.Raw(@Model.Content)
             </div>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="glass-card-static mt-4" style="padding: 2rem;">
+            <div class="comment-section-title mb-3">
+                <i class="bi bi-chat-dots-fill" style="color: var(--accent-green);"></i>
+                Comments
+                <span class="comment-count">@Model.Comments.Count()</span>
+            </div>
+
+            @foreach(var comment in Model.Comments)
+            {
+                <div class="comment-item">
+                    <img src="/img/@comment.User.Image" alt="@comment.User.Name" class="comment-avatar">
+                    <div>
+                        <div class="d-flex align-items-center flex-wrap">
+                            <span class="comment-author">
+                                <a href="/profile/@comment.User.UserName">@comment.User.Name</a>
+                            </span>
+                            <span class="comment-date">@comment.PublishedOn.ToString("G")</span>
+                        </div>
+                        <p class="comment-text">@comment.Text</p>
+                    </div>
+                </div>
+            }
+
+            @if(User.Identity!.IsAuthenticated)
+            {
+                <hr>
+                <h5 style="font-weight: 700; margin-bottom: 1rem;">
+                    <i class="bi bi-pencil-square" style="color: var(--accent-green);"></i> Add Comment
+                </h5>
+                <form action="/posts/AddComment" method="post">
+                    <input type="hidden" name="PostId" value="@Model.PostId">
+                    <input type="hidden" name="Url" value="@Model.Url">
+                    <div class="mb-3">
+                        <textarea name="Text" id="Text" rows="3" class="form-control-dark" placeholder="Share your thoughts..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-glow">
+                        <i class="bi bi-send-fill"></i> Post Comment
+                    </button>
+                </form>
+            }
+            else
+            {
+                <div style="text-align: center; padding: 1.5rem 0; color: var(--text-muted);">
+                    <i class="bi bi-lock-fill" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block;"></i>
+                    You must <a href="/users/login" style="font-weight: 700;">log in</a> to comment.
+                </div>
+            }
         </div>
     </div>
-    <div class="col-lg-4 ms-lg-auto pe-0">
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
         <vc:tags-menu></vc:tags-menu>
         <vc:new-posts></vc:new-posts>
     </div>

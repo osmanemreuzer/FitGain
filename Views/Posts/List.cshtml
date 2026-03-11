@@ -1,37 +1,67 @@
 @model List<Post>
 
-<div class="row">
-    <div class="col-12">
-        <h2>Post List</h2>
-        <a href="/posts/create" class="btn btn-primary">New Post</a>
-        <hr>
-        @if (TempData["Message"] != null)
-        {
-            var messageType = TempData["MessageType"] ?? "info";
-            <div class="alert alert-@messageType alert-dismissible fade show mt-3" role="alert">
-                <strong>@TempData["Message"]</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        }
-        <table class="table tabled-bordered mt-3">
+<div class="animate-fade-in-up">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <div>
+            <h1 class="section-title gradient-text">My Posts</h1>
+            <p style="color: var(--text-muted); font-size: var(--font-size-sm);">Manage and track your published content</p>
+        </div>
+        <a href="/posts/create" class="btn-glow">
+            <i class="bi bi-plus-circle-fill"></i> New Post
+        </a>
+    </div>
+
+    <!-- Alert Messages -->
+    @if (TempData["Message"] != null)
+    {
+        var messageType = TempData["MessageType"]?.ToString() ?? "info";
+        var alertClass = messageType == "danger" ? "alert-danger-glass" : "alert-info-glass";
+        <div class="alert-glass @alertClass">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <strong>@TempData["Message"]</strong>
+            <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+        </div>
+    }
+
+    <!-- Table -->
+    <div class="glass-card-static" style="padding: 0.5rem;">
+        <table class="table-dark-custom">
             <thead>
                 <tr>
-                    <th style="width: 200px;">Image</th>
+                    <th style="width: 120px;">Image</th>
                     <th>Title</th>
-                    <th>Is Active</th>
-                    <th style="width: 125px;"></th>
+                    <th style="width: 120px;">Status</th>
+                    <th style="width: 160px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach(var item in Model)
                 {
                     <tr>
-                        <td><img src="/img/@item.Image" class="img-fluid" alt=""></td>
-                        <td>@item.Title</td>
-                        <td>@item.IsActive</td>
                         <td>
-                            <a href="/posts/edit/@item.PostId" class="btn btn-sm btn-primary">Edit</a>
-                            <a href="/posts/delete/@item.PostId" class="btn btn-sm btn-danger">Delete</a>
+                            <img src="/img/@item.Image" alt="@item.Title" style="width: 80px; height: 50px; object-fit: cover;">
+                        </td>
+                        <td style="color: var(--text-primary); font-weight: 600;">@item.Title</td>
+                        <td>
+                            @if(item.IsActive)
+                            {
+                                <span class="status-badge status-active">Active</span>
+                            }
+                            else
+                            {
+                                <span class="status-badge status-inactive">Draft</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <a href="/posts/edit/@item.PostId" class="btn-glow btn-glow-sm">
+                                    <i class="bi bi-pencil-fill"></i> Edit
+                                </a>
+                                <a href="/posts/delete/@item.PostId" class="btn-danger-glow btn-danger-glow-sm">
+                                    <i class="bi bi-trash-fill"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 }

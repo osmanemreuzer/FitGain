@@ -1,0 +1,59 @@
+## .NET
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
+nupkg/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# NuGet
+*.nupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+# Misc
+*.VisualState.xml
+TestResult.xml
+[Tt]est[Rr]esult*/
+
+# User-specific
+*.rsuser
+*.userprefs
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Database
+*.mdf
+*.ldf
+*.ndf
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Secrets
+appsettings.Development.json

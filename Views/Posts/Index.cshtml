@@ -1,37 +1,49 @@
 @using FitGain.Entity
 @model List<Post>
 
-<div class="row">
-    <div class="col-lg-6 ps-0">
-        <div class="bg-white p-4">
-            <h1 class="h2 mb-4">Progress Corner</h1>
+<!-- Hero Section -->
+<div class="page-hero animate-fade-in-up">
+    <h1 class="page-hero-title"><span class="gradient-text">Progress Corner</span></h1>
+    <p class="page-hero-subtitle">Share your fitness journey, inspire others 💪</p>
+</div>
+
+<div class="row g-4">
+    <!-- Main Content -->
+    <div class="col-lg-8">
+        <div class="stagger-container">
             @foreach(var post in Model)
             {
-                <div class="card bg-transparent border-0 mb-3">
-                    <div class="row">
-                        <div class="col-4">
-                            <img src="~/img/@post.Image" class="img-fluid rounded" alt="">
+                <div class="post-card stagger-item">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <div class="post-image-wrapper" style="height: 100%; min-height: 180px;">
+                                <img src="~/img/@post.Image" alt="@post.Title">
+                            </div>
                         </div>
-                        <div class="col-8">
-                            <h5><a href="/posts/details/@post.Url" class="btn-link fw-bold">@post.Title</a></h5>
-                            <p>@post.Description</p>
+                        <div class="col-md-8">
+                            <div class="post-body">
+                                <a href="/posts/details/@post.Url" class="post-title">@post.Title</a>
+                                <p class="post-description">@post.Description</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <hr class="my-3">
             }
-            <nav>
-                <ul class="pagination">
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                </ul>
-            </nav>
         </div>
+
+        <!-- Pagination -->
+        <nav>
+            <ul class="pagination-custom">
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+            </ul>
+        </nav>
     </div>
-    <div class="col-lg-4  ms-lg-auto pe-0" >
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
         <vc:tags-menu></vc:tags-menu>
         <vc:new-posts></vc:new-posts>
     </div>
-        
 </div>
